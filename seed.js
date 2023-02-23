@@ -1,5 +1,5 @@
-const {db, User, Movie} = require('.server/db');
-const {red, green} = require('chalk');
+const {db, User, Movie} = require('./server/db');
+//const {red, green} = require('chalk');
 const movies_info = [
   {
     title: 'Cottage, The',
@@ -403,11 +403,11 @@ module.exports = seed;
 if (require.main === module) {
   seed()
   .then(() => {
-    console.log(green('seeding success!'));
+    console.log(('seeding success!'));
     db.close();
   })
   .catch((err) => {
-    console.error(red('oh no! Something went wrong!'));
+    console.error(('oh no! Something went wrong!'));
     console.error(err);
     db.close();
   }) 
