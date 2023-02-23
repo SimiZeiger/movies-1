@@ -1,3 +1,5 @@
+const {db, User, Movie} = require('.server/db');
+const {red, green} = require('chalk');
 const movies_info = [
   {
     title: 'Cottage, The',
@@ -377,3 +379,36 @@ const users = [
     userRating: 3,
   },
 ];
+
+const seed = async () => {
+  try{
+    await db.sync({force: true});
+    await Promise.all(
+      users.map(user => {
+        return User.create(user);
+      })
+    );
+    await Promise.all(
+      movies_info.map((movie) => {
+        return Movie.create(movie);
+      })
+    );
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+module.exports = seed;
+
+if (require.main === module) {
+  seed()
+  .then(() => {
+    console.log(green('seeding success!'));
+    db.close();
+  })
+  .catch((err) => {
+    console.error(red('oh no! Something went wrong!'));
+    console.error(err);
+    db.close();
+  }) 
+}
